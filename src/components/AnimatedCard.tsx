@@ -17,12 +17,10 @@ export default function AnimatedCard({
 
   useEffect(() => {
     if (!cardRef.current || !glareRef.current) return;
-    
-    // GSAP quickTo for hyper-smooth 3D tilt tracking
+
     const xTo = gsap.quickTo(cardRef.current, "rotationX", { duration: 0.6, ease: "power3.out" });
     const yTo = gsap.quickTo(cardRef.current, "rotationY", { duration: 0.6, ease: "power3.out" });
-    
-    // Glare position and opacity
+
     const glareXTo = gsap.quickTo(glareRef.current, "x", { duration: 0.6, ease: "power3.out" });
     const glareYTo = gsap.quickTo(glareRef.current, "y", { duration: 0.6, ease: "power3.out" });
     const glareOpacityTo = gsap.quickTo(glareRef.current, "opacity", { duration: 0.6, ease: "power3.out" });
@@ -31,25 +29,22 @@ export default function AnimatedCard({
       const rect = cardRef.current!.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      
-      // Calculate rotation. Max rotation is 4 degrees for a subtle, high-end feel
-      const rotX = ((y - centerY) / centerY) * -4; 
+
+      const rotX = ((y - centerY) / centerY) * -4;
       const rotY = ((x - centerX) / centerX) * 4;
-      
+
       xTo(rotX);
       yTo(rotY);
-      
-      // Calculate the glare offset based on mouse position. 
-      // As you tilt the card, the light sheen should sweep across it.
+
       const percentX = x / rect.width;
       const percentY = y / rect.height;
-      
+
       glareXTo(-percentX * rect.width);
       glareYTo(-percentY * rect.height);
-      glareOpacityTo(1); 
+      glareOpacityTo(1);
     };
 
     const handleMouseLeave = () => {
@@ -80,8 +75,8 @@ export default function AnimatedCard({
         style={{ transformStyle: "preserve-3d", transformOrigin: "center center" }}
         {...props}
       >
-        {/* Glassy Steam-style reflection/glare effect */}
-        <div 
+        {/* Glassy reflection/glare effect */}
+        <div
           ref={glareRef}
           className="absolute top-0 left-0 w-[200%] h-[200%] pointer-events-none z-20 opacity-0 transform-gpu"
           style={{
@@ -90,9 +85,9 @@ export default function AnimatedCard({
           }}
         />
 
-        {/* Subtle inner texture element */}
+
         <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none transform-gpu -translate-z-10" />
-        
+
         {/* Push contents outward in 3D space */}
         <div className="relative z-10 h-full flex flex-col transform-gpu" style={{ transform: "translateZ(30px)" }}>
           {children}

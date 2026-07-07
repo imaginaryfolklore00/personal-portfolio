@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -25,7 +25,7 @@ export default function ExperienceSection() {
 
   useGSAP(() => {
     const cards = gsap.utils.toArray('.exp-card');
-    
+
     gsap.from('.exp-title', {
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -56,7 +56,7 @@ export default function ExperienceSection() {
   return (
     <section id="experience" ref={sectionRef} className="py-20 sm:py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto">
       <h2 className="exp-title text-4xl sm:text-5xl font-bold mb-16 tracking-tight">Experience.</h2>
-      
+
       <div className="space-y-12">
         {experiences.map((exp, idx) => (
           <AnimatedCard key={idx} className="exp-card flex flex-col md:flex-row gap-8 md:gap-16">

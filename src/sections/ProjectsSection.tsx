@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -65,9 +65,7 @@ export default function ProjectsSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((proj, idx) => (
           <AnimatedCard key={idx} className="proj-card flex flex-col h-full group !p-0">
-            {/* Cinematic Media Container */}
             <div className="relative h-64 sm:h-80 w-full overflow-hidden border-b border-white/5 bg-black">
-              {/* Overlay that fades out on hover */}
               <div className="absolute inset-0 bg-background/60 group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none" />
 
               <img
