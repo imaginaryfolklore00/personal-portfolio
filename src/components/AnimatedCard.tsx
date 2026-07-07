@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { cn } from '../utils/cn';
+import gsap from 'gsap';
 
 interface AnimatedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -11,20 +12,91 @@ export default function AnimatedCard({
   className,
   ...props
 }: AnimatedCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!cardRef.current || !glareRef.current) return;
+    
+    // GSAP quickTo for hyper-smooth 3D tilt tracking
+    const xTo = gsap.quickTo(cardRef.current, "rotationX", { duration: 0.6, ease: "power3.out" });
+    const yTo = gsap.quickTo(cardRef.current, "rotationY", { duration: 0.6, ease: "power3.out" });
+    
+    // Glare position and opacity
+    const glareXTo = gsap.quickTo(glareRef.current, "x", { duration: 0.6, ease: "power3.out" });
+    const glareYTo = gsap.quickTo(glareRef.current, "y", { duration: 0.6, ease: "power3.out" });
+    const glareOpacityTo = gsap.quickTo(glareRef.current, "opacity", { duration: 0.6, ease: "power3.out" });
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = cardRef.current!.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate rotation. Max rotation is 4 degrees for a subtle, high-end feel
+      const rotX = ((y - centerY) / centerY) * -4; 
+      const rotY = ((x - centerX) / centerX) * 4;
+      
+      xTo(rotX);
+      yTo(rotY);
+      
+      // Calculate the glare offset based on mouse position. 
+      // As you tilt the card, the light sheen should sweep across it.
+      const percentX = x / rect.width;
+      const percentY = y / rect.height;
+      
+      glareXTo(-percentX * rect.width);
+      glareYTo(-percentY * rect.height);
+      glareOpacityTo(1); 
+    };
+
+    const handleMouseLeave = () => {
+      xTo(0);
+      yTo(0);
+      glareOpacityTo(0);
+    };
+
+    const el = cardRef.current;
+    el.addEventListener("mousemove", handleMouseMove);
+    el.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      el.removeEventListener("mousemove", handleMouseMove);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
   return (
-    <div
-      className={cn(
-        "relative overflow-hidden rounded-[2.5rem] bg-surface border border-white/5 p-8 sm:p-12 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-        "hover:-translate-y-1 hover:border-white/10 hover:shadow-2xl hover:shadow-white/5",
-        "backdrop-blur-sm",
-        className
-      )}
-      {...props}
-    >
-      {/* Subtle inner glow/texture element could go here */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
-      <div className="relative z-10">
-        {children}
+    <div style={{ perspective: "1200px" }} className="h-full">
+      <div
+        ref={cardRef}
+        className={cn(
+          "relative overflow-hidden rounded-[2.5rem] bg-surface border border-white/5 p-8 sm:p-12 transition-colors duration-500",
+          "hover:border-white/20 hover:shadow-2xl hover:shadow-white/5 backdrop-blur-sm group",
+          className
+        )}
+        style={{ transformStyle: "preserve-3d", transformOrigin: "center center" }}
+        {...props}
+      >
+        {/* Glassy Steam-style reflection/glare effect */}
+        <div 
+          ref={glareRef}
+          className="absolute top-0 left-0 w-[200%] h-[200%] pointer-events-none z-20 opacity-0 transform-gpu"
+          style={{
+            background: "linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.01) 35%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.01) 65%, transparent 80%)",
+            mixBlendMode: "overlay"
+          }}
+        />
+
+        {/* Subtle inner texture element */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none transform-gpu -translate-z-10" />
+        
+        {/* Push contents outward in 3D space */}
+        <div className="relative z-10 h-full flex flex-col transform-gpu" style={{ transform: "translateZ(30px)" }}>
+          {children}
+        </div>
       </div>
     </div>
   );
