@@ -18,45 +18,46 @@ export default function HeroSection() {
       ease: 'power3.out',
       delay: 0.2
     })
-    .from('.hero-sub', {
-      y: 20,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out'
-    }, "-=0.8")
-    .from('.hero-action', {
-      scale: 0.9,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out'
-    }, "-=0.6");
+      .from('.hero-sub', {
+        y: 20,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+      }, "-=0.8")
+      .from('.hero-action', {
+        scale: 0.9,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+      }, "-=0.6");
 
   }, { scope: containerRef });
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto pt-28 pb-32 sm:pb-0"
+    <section
+      ref={containerRef}
+      className="relative min-h-[100dvh] flex flex-col px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto pt-24 sm:pt-32"
     >
-      <div className="max-w-4xl relative z-10">
+      <div className="flex-1 flex flex-col justify-center max-w-4xl relative z-10 w-full mb-12 sm:mb-24">
         <div className="overflow-hidden mb-6">
           <h2 className="hero-text text-sm sm:text-base font-medium text-white/50 tracking-[0.2em] uppercase flex items-center gap-3">
             <span className="w-8 h-[1px] bg-white/30"></span> Warsaw, Poland
           </h2>
         </div>
-        
+
         <h1 className="text-5xl sm:text-7xl lg:text-[6rem] leading-[1.1] font-bold tracking-tight mb-8">
           <div className="overflow-hidden">
             <span className="hero-text block">Nazeem.</span>
           </div>
           <div className="overflow-hidden text-white/40">
-            {/* Added tracking-normal to fix 'f' and 't' overlap */}
-            <span className="hero-text block tracking-normal">Software Developer.</span>
+            <span className="hero-text block tracking-normal">
+              So<span className="mr-[0.05em]">f</span>tware Developer.
+            </span>
           </div>
         </h1>
 
         <p className="hero-sub text-lg sm:text-2xl text-white/70 max-w-2xl mb-12 font-light leading-relaxed">
-          I build high-fidelity, complex applications. Specializing in <span className="text-white font-medium">React, TypeScript, and Next.js</span>. 
+          I build high-fidelity, complex applications. Specializing in <span className="text-white font-medium">React, TypeScript, and Next.js</span>.
           Former developer at Samsung Research Poland.
         </p>
 
@@ -82,12 +83,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="hidden sm:block absolute bottom-12 left-6 sm:left-12 lg:left-24 hero-action">
-        <p className="text-sm text-white/40 uppercase tracking-widest font-medium flex flex-col items-center gap-2">
-          <span className="w-[1px] h-12 bg-gradient-to-b from-white/0 to-white/40"></span>
-          Scroll
-        </p>
-      </div>
     </section>
   );
 }
