@@ -11,17 +11,17 @@ const skillCategories = [
   {
     title: "Frontend & Core",
     icon: <Layout className="text-primary mb-4" size={32} />,
-    skills: ["React", "TypeScript", "Next.js", "JavaScript", "HTML/CSS", "Angular"]
+    skills: ["React", "TypeScript/JavaScript", "Next.js", "HTML/CSS", "Angular", "MUI"]
   },
   {
     title: "Backend & Data",
     icon: <Database className="text-purple-400 mb-4" size={32} />,
-    skills: ["Node.js", "GraphQL", "Apollo", "PostgreSQL", "MongoDB"]
+    skills: ["Node.js", "GraphQL", "Apollo", "PostgreSQL", "MongoDB", "Express"]
   },
   {
     title: "Tools & Architecture",
     icon: <Wrench className="text-indigo-400 mb-4" size={32} />,
-    skills: ["AWS Bedrock", "Jest / Cypress", "Jenkins", "Git", "GitHub Actions"]
+    skills: ["AWS Bedrock", "Jest", "Cypress", "Jenkins", "Git", "Agentic Coding"]
   }
 ];
 
@@ -64,7 +64,7 @@ export default function SkillsSection() {
           Technical <span className="text-white/40">Arsenal.</span>
         </h2>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {skillCategories.map((category, idx) => (
           <AnimatedCard key={idx} className="skill-group p-8 sm:p-10 !rounded-[2rem]">

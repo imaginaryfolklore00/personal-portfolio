@@ -71,11 +71,11 @@ export default function HeroSection() {
             </span>
           </MagneticButton>
           <div className="flex gap-6 mt-4 sm:mt-0 px-2 sm:px-0">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors group flex items-center gap-2">
+            <a href="https://github.com/imaginaryfolklore00" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors group flex items-center gap-2">
               <Github size={20} className="group-hover:-translate-y-1 transition-transform" />
               <span className="text-sm font-medium">GitHub</span>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors group flex items-center gap-2">
+            <a href="https://www.linkedin.com/in/nazeemdev/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors group flex items-center gap-2">
               <Linkedin size={20} className="group-hover:-translate-y-1 transition-transform" />
               <span className="text-sm font-medium">LinkedIn</span>
             </a>
