@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { cn } from '../utils/cn';
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 
 interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -19,15 +18,39 @@ export default function MagneticButton({
   const textRef = useRef<HTMLSpanElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseEnter = () => setIsHovered(true);
+  useEffect(() => {
+    // Cleanup transforms on unmount
+    return () => {
+      if (buttonRef.current) gsap.killTweensOf(buttonRef.current);
+      if (textRef.current) gsap.killTweensOf(textRef.current);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    // Optional: scale up slightly with GSAP instead of CSS to avoid conflicts
+    if (buttonRef.current) {
+      gsap.to(buttonRef.current, { scale: 1.03, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+    }
+  };
+  
   const handleMouseLeave = () => {
     setIsHovered(false);
     if (buttonRef.current && textRef.current) {
-      gsap.to([buttonRef.current, textRef.current], {
+      gsap.to(buttonRef.current, {
         x: 0,
         y: 0,
-        duration: 0.5,
-        ease: 'power3.out',
+        scale: 1,
+        duration: 0.7,
+        ease: 'elastic.out(1, 0.3)',
+        overwrite: 'auto'
+      });
+      gsap.to(textRef.current, {
+        x: 0,
+        y: 0,
+        duration: 0.7,
+        ease: 'elastic.out(1, 0.3)',
+        overwrite: 'auto'
       });
     }
   };
@@ -35,21 +58,23 @@ export default function MagneticButton({
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!buttonRef.current || !textRef.current) return;
     const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) * 0.3;
-    const y = (e.clientY - top - height / 2) * 0.3;
+    const x = (e.clientX - left - width / 2) * 0.4;
+    const y = (e.clientY - top - height / 2) * 0.4;
 
     gsap.to(buttonRef.current, {
       x,
       y,
-      duration: 1,
+      duration: 0.5,
       ease: 'power3.out',
+      overwrite: 'auto'
     });
 
     gsap.to(textRef.current, {
-      x: x * 0.5,
-      y: y * 0.5,
-      duration: 1,
+      x: x * 0.4,
+      y: y * 0.4,
+      duration: 0.5,
       ease: 'power3.out',
+      overwrite: 'auto'
     });
   };
 
@@ -60,8 +85,9 @@ export default function MagneticButton({
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
       className={cn(
-        "relative flex items-center justify-center overflow-hidden rounded-full px-8 py-4 font-medium transition-transform duration-300",
-        "hover:scale-[1.03] active:scale-[0.98]",
+        "relative flex items-center justify-center overflow-hidden rounded-full px-8 py-4 font-medium",
+        // Removed CSS transform transition to stop it fighting with GSAP
+        "active:scale-[0.98]",
         "border border-white/10",
         {
           "bg-white text-black": variant === 'primary',
@@ -69,7 +95,6 @@ export default function MagneticButton({
         },
         className
       )}
-      style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}
       {...props}
     >
       <span
@@ -84,7 +109,7 @@ export default function MagneticButton({
       />
       <span
         ref={textRef}
-        className={cn("relative z-10", {
+        className={cn("relative z-10 block", {
           "text-black": variant === 'primary',
           "group-hover:text-black": variant === 'outline',
         }, isHovered && variant === 'outline' ? 'text-black' : '')}

@@ -11,7 +11,7 @@ const projects = [
   {
     title: "VXT Developer Portal",
     type: "Global B2B Platform (Samsung)",
-    description: "A dashboard-like project where Samsung partners platform their applications used inside VXT Canvas. Built complex forms, dynamic sales data visualizations, and robust GraphQL integrations. Used by major global clients like Żabka.",
+    description: "A dashboard-like project where Samsung partners platform their applications used inside VXT Canvas. Built complex forms, dynamic sales data visualizations, and robust GraphQL integrations. Used by major global clients.",
     tags: ["React", "Next.js", "GraphQL", "AWS Bedrock", "MUI", "Jest"],
     link: "https://developer.samsungvx.com/"
   },
@@ -57,9 +57,9 @@ export default function ProjectsSection() {
   }, { scope: sectionRef });
 
   return (
-    <section className="py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto" ref={sectionRef}>
+    <section className="py-20 sm:py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto" ref={sectionRef}>
       <h2 className="proj-title text-4xl sm:text-5xl font-bold mb-16 tracking-tight">Selected Work.</h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((proj, idx) => (
           <AnimatedCard key={idx} className="proj-card flex flex-col h-full group">
@@ -73,13 +73,13 @@ export default function ProjectsSection() {
                 </a>
               )}
             </div>
-            
+
             <p className="text-primary text-sm font-medium tracking-wider uppercase mb-3">{proj.type}</p>
             <h3 className="text-3xl font-bold mb-4">{proj.title}</h3>
             <p className="text-white/60 leading-relaxed mb-8 flex-grow">
               {proj.description}
             </p>
-            
+
             <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/5">
               {proj.tags.map(tag => (
                 <span key={tag} className="px-3 py-1 rounded-full border border-white/10 text-xs font-medium text-white/70 bg-white/5">

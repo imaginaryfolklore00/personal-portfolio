@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import MagneticButton from '../components/MagneticButton';
-import { ArrowDownRight } from 'lucide-react';
+import { ArrowDownRight, Github, Linkedin } from 'lucide-react';
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,12 +36,12 @@ export default function HeroSection() {
   return (
     <section 
       ref={containerRef} 
-      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto pt-20"
+      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto pt-28 pb-32 sm:pb-0"
     >
-      <div className="max-w-4xl">
-        <div className="overflow-hidden mb-4">
-          <h2 className="hero-text text-lg sm:text-xl font-medium text-white/60 tracking-wide uppercase">
-            Warsaw, Poland
+      <div className="max-w-4xl relative z-10">
+        <div className="overflow-hidden mb-6">
+          <h2 className="hero-text text-sm sm:text-base font-medium text-white/50 tracking-[0.2em] uppercase flex items-center gap-3">
+            <span className="w-8 h-[1px] bg-white/30"></span> Warsaw, Poland
           </h2>
         </div>
         
@@ -50,7 +50,8 @@ export default function HeroSection() {
             <span className="hero-text block">Nazeem.</span>
           </div>
           <div className="overflow-hidden text-white/40">
-            <span className="hero-text block">Software Developer.</span>
+            {/* Added tracking-normal to fix 'f' and 't' overlap */}
+            <span className="hero-text block tracking-normal">Software Developer.</span>
           </div>
         </h1>
 
@@ -59,7 +60,7 @@ export default function HeroSection() {
           Former developer at Samsung Research Poland.
         </p>
 
-        <div className="hero-action flex flex-wrap gap-6 items-center">
+        <div className="hero-action flex flex-col sm:flex-row gap-6 items-start sm:items-center">
           <MagneticButton onClick={() => {
             document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' });
           }}>
@@ -68,17 +69,24 @@ export default function HeroSection() {
               <ArrowDownRight size={18} />
             </span>
           </MagneticButton>
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors underline-offset-4 hover:underline">
-            GitHub
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors underline-offset-4 hover:underline">
-            LinkedIn
-          </a>
+          <div className="flex gap-6 mt-4 sm:mt-0 px-2 sm:px-0">
+            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors group flex items-center gap-2">
+              <Github size={20} className="group-hover:-translate-y-1 transition-transform" />
+              <span className="text-sm font-medium">GitHub</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors group flex items-center gap-2">
+              <Linkedin size={20} className="group-hover:-translate-y-1 transition-transform" />
+              <span className="text-sm font-medium">LinkedIn</span>
+            </a>
+          </div>
         </div>
       </div>
 
-      <div className="absolute bottom-12 left-6 sm:left-12 lg:left-24 hero-action">
-        <p className="text-sm text-white/40 uppercase tracking-widest font-medium">Scroll to explore</p>
+      <div className="hidden sm:block absolute bottom-12 left-6 sm:left-12 lg:left-24 hero-action">
+        <p className="text-sm text-white/40 uppercase tracking-widest font-medium flex flex-col items-center gap-2">
+          <span className="w-[1px] h-12 bg-gradient-to-b from-white/0 to-white/40"></span>
+          Scroll
+        </p>
       </div>
     </section>
   );

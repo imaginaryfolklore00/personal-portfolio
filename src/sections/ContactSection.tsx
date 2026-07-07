@@ -25,7 +25,7 @@ export default function ContactSection() {
   }, { scope: sectionRef });
 
   return (
-    <section className="py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto flex flex-col items-center justify-center text-center min-h-[60vh]" ref={sectionRef}>
+    <section className="py-20 sm:py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto flex flex-col items-center justify-center text-center min-h-[60vh]" ref={sectionRef}>
       <h2 className="contact-elem text-5xl sm:text-7xl font-bold tracking-tight mb-8">
         Let's build something <br/><span className="text-white/40">exceptional.</span>
       </h2>

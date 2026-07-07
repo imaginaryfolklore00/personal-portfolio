@@ -54,7 +54,7 @@ export default function ExperienceSection() {
   }, { scope: sectionRef });
 
   return (
-    <section id="experience" ref={sectionRef} className="py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto">
+    <section id="experience" ref={sectionRef} className="py-20 sm:py-32 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto">
       <h2 className="exp-title text-4xl sm:text-5xl font-bold mb-16 tracking-tight">Experience.</h2>
       
       <div className="space-y-12">
