@@ -1,4 +1,4 @@
-# Nazeem - Personal Portfolio
+# Personal Portfolio
 
 A high-fidelity, performance-focused personal portfolio built to demonstrate modern frontend architecture and advanced interaction design. 
 
